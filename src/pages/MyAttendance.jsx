@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Layout from "../components/Layout";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
@@ -12,9 +12,9 @@ const MyAttendance = () => {
 
   useEffect(() => {
     fetchAttendance();
-  }, []);
+  }, [fetchAttendance]);
 
-  const fetchAttendance = () => {
+  const fetchAttendance = useCallback(() => {
     setLoading(true);
     api
       .get("/attendance/")
@@ -27,7 +27,7 @@ const MyAttendance = () => {
         setTodayAttendance(myData.find((a) => a.date === today) || null);
       })
       .finally(() => setLoading(false));
-  };
+  }, [user?.name]);
 
   const handleCheckIn = async () => {
     setLoading(true);

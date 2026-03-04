@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Layout from "../components/Layout";
 import api from "../services/api";
 import Spinner from "../components/Spinner";
@@ -15,7 +15,7 @@ const Rekap = () => {
 
   useEffect(() => {
     fetchRekap();
-  }, [month, year]);
+  }, [month, year, fetchRekap]);
 
   useEffect(() => {
     const q = search.toLowerCase();
@@ -35,13 +35,13 @@ const Rekap = () => {
     setFiltered(result);
   }, [search, rekap, sortKey, sortDir]);
 
-  const fetchRekap = () => {
+  const fetchRekap = useCallback(() => {
     setLoading(true);
     api
       .get("/rekap/", { params: { month, year } })
       .then((res) => setRekap(res.data))
       .finally(() => setLoading(false));
-  };
+  }, [month, year]);
 
   const handleSort = (key) => {
     if (sortKey === key) setSortDir(sortDir === "asc" ? "desc" : "asc");

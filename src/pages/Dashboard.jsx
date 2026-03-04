@@ -171,7 +171,7 @@ const KaryawanDashboard = () => {
         if (myRekap) setRekap(myRekap);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [month, year, today, user?.name]);
 
   const handleCheckIn = async () => {
     setLoadingAction(true);
