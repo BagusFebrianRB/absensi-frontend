@@ -10,10 +10,6 @@ const MyAttendance = () => {
   const [todayAttendance, setTodayAttendance] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchAttendance();
-  }, [fetchAttendance]);
-
   const fetchAttendance = useCallback(() => {
     setLoading(true);
     api
@@ -28,6 +24,10 @@ const MyAttendance = () => {
       })
       .finally(() => setLoading(false));
   }, [user?.name]);
+
+   useEffect(() => {
+    fetchAttendance();
+  }, [fetchAttendance]);
 
   const handleCheckIn = async () => {
     setLoading(true);

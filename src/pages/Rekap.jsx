@@ -13,9 +13,7 @@ const Rekap = () => {
   const [sortKey, setSortKey] = useState("name");
   const [sortDir, setSortDir] = useState("asc");
 
-  useEffect(() => {
-    fetchRekap();
-  }, [month, year, fetchRekap]);
+  
 
   useEffect(() => {
     const q = search.toLowerCase();
@@ -42,6 +40,10 @@ const Rekap = () => {
       .then((res) => setRekap(res.data))
       .finally(() => setLoading(false));
   }, [month, year]);
+
+  useEffect(() => {
+    fetchRekap();
+  }, [month, year, fetchRekap]);
 
   const handleSort = (key) => {
     if (sortKey === key) setSortDir(sortDir === "asc" ? "desc" : "asc");
